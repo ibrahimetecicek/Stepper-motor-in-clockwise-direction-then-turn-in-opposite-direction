@@ -1,0 +1,120 @@
+Microsoft (R) Macro Assembler Version 5.00                  5/5/17 14:23:43
+                                                             Page     1-1
+
+
+ = 3FD6				CNT3        EQU   3FD6H 
+ = 3FD0				APORT3   EQU   3FD0H 
+ = 3FD2				BPORT3   EQU   3FD2H 
+ 0000				CODE       SEGMENT   
+				         ASSUME   CS:CODE, DS:CODE 
+ 0000				         ORG   0 
+				 
+ 0000  BC 4000			START:   MOV   SP,4000H 
+ 0003  B0 90			                MOV   AL,90H 
+ 0005  BA 3FD6			                MOV   DX,CNT3 
+ 0008  EE			                OUT   DX,AL 
+				 
+ 0009  B4 03			J2:	MOV	AH,3		;run 4 times 
+				 
+ 000B  B0 01			MAIN:	MOV	AL,01H		;4 bit LED left
+				 shift 
+ 000D  E8 0067 R			CALL	OUTPUT 
+ 0010  D0 C0				ROL	AL,1 
+ 0012  E8 0067 R			CALL	OUTPUT 
+ 0015  D0 C0				ROL	AL,1 
+ 0017  E8 0067 R			CALL	OUTPUT 
+ 001A  D0 C0				ROL	AL,1 
+ 001C  E8 0067 R			CALL	OUTPUT 
+ 001F  FE CC				DEC	AH 
+ 0021  75 E8				JNZ	MAIN 
+				 
+ 0023  B0 08				MOV	AL,08H		;delay 2s instr
+				uction 
+ 0025  E8 0067 R			CALL	OUTPUT 
+ 0028  B0 08				MOV	AL,08H 
+ 002A  E8 0067 R			CALL	OUTPUT 
+ 002D  B0 08				MOV	AL,08H 
+ 002F  E8 0067 R			CALL	OUTPUT 
+ 0032  B0 08				MOV	AL,08H 
+ 0034  E8 0067 R			CALL	OUTPUT 
+				 
+				 
+ 0037  B4 06			J1:	MOV	AH,6		;run 4 times 
+				 
+ 0039  B0 08			J3:	MOV	AL,08H		;4 bit LED righ
+				t shift 
+ 003B  E8 0067 R			CALL	OUTPUT 
+ 003E  D0 C8				ROR	AL,1 
+ 0040  E8 0067 R			CALL	OUTPUT 
+ 0043  D0 C8				ROR	AL,1 
+ 0045  E8 0067 R			CALL	OUTPUT 
+ 0048  D0 C8				ROR	AL,1 
+ 004A  E8 0067 R			CALL	OUTPUT 
+ 004D  FE CC				DEC	AH 
+ 004F  75 E8				JNZ	J3 
+				 
+ 0051  B0 01				MOV	AL,01H		;delay 2s instr
+				uction 
+ 0053  E8 0067 R			CALL	OUTPUT 
+Microsoft (R) Macro Assembler Version 5.00                  5/5/17 14:23:43
+                                                             Page     1-2
+
+
+ 0056  B0 01				MOV	AL,01H	 
+ 0058  E8 0067 R			CALL	OUTPUT 
+ 005B  B0 01				MOV	AL,01H	 
+ 005D  E8 0067 R			CALL	OUTPUT 
+ 0060  B0 01				MOV	AL,01H	 
+ 0062  E8 0067 R			CALL	OUTPUT 
+				 
+ 0065  EB A2				JMP	J2 
+				 
+ 0067  BA 3FD2			OUTPUT:	MOV	DX,BPORT3 
+ 006A  EE				OUT	DX,AL 
+ 006B  B9 9000				MOV	CX,9000H 
+ 006E  E2 FE				LOOP	$ 
+ 0070  C3				RET 
+				 
+ 0071				CODE	ENDS 
+					END	START 
+Microsoft (R) Macro Assembler Version 5.00                  5/5/17 14:23:43
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0071	PARA	NONE	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+APORT3 . . . . . . . . . . . . .  	NUMBER	3FD0	
+
+BPORT3 . . . . . . . . . . . . .  	NUMBER	3FD2	
+
+CNT3 . . . . . . . . . . . . . .  	NUMBER	3FD6	
+
+J1 . . . . . . . . . . . . . . .  	L NEAR	0037	CODE
+J2 . . . . . . . . . . . . . . .  	L NEAR	0009	CODE
+J3 . . . . . . . . . . . . . . .  	L NEAR	0039	CODE
+
+MAIN . . . . . . . . . . . . . .  	L NEAR	000B	CODE
+
+OUTPUT . . . . . . . . . . . . .  	L NEAR	0067	CODE
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CODE
+
+@FILENAME  . . . . . . . . . . .  	TEXT  leds		
+
+
+     67 Source  Lines
+     67 Total   Lines
+     12 Symbols
+
+  51218 + 465326 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
